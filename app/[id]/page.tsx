@@ -89,6 +89,7 @@ function AnimeDetail({ params }: { params: { id: number } }) {
           allowFullScreen
           allow="autoplay"
           className="rounded-xl"
+          loading="lazy"
         ></iframe>
       </div>
 
