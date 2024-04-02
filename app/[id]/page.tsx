@@ -1,10 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface Anime {
   name: string;
-  episode: number;
+  episodes: number;
+  episodes_aired: number;
   score: string;
+  image: {
+    original: string;
+    preview: string;
+  };
+  kind: string;
 }
 
 function AnimeDetail({ params }: { params: { id: number } }) {
@@ -19,8 +26,11 @@ function AnimeDetail({ params }: { params: { id: number } }) {
       const data = await response.json();
       setAnime({
         name: data.name,
-        episode: data.episodes_aired,
+        episodes: data.episodes,
+        episodes_aired: data.episodes_aired,
         score: data.score,
+        image: data.image,
+        kind: data.kind,
       });
     } catch (error) {
       console.error("Error fetching anime:", error);
@@ -36,9 +46,20 @@ function AnimeDetail({ params }: { params: { id: number } }) {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <h2>{anime.name}</h2>
-      <p>Episode: {anime.episode}</p>
+    <div className="flex flex-col items-center h-[89dvh]">
+      <div className="relative w-[225px] h-[320px]">
+        <Image
+          src={`https://shikimori.one${anime.image.original}`}
+          alt={anime.name}
+          fill
+          className="rounded-xl"
+        />
+      </div>
+      <h1 className="font-semibold text-xl">{anime.name}</h1>
+      <div className="py-1 px-2 bg-[#161921] rounded-sm">
+        <p className="text-white text-sm font-bold capitalize">{anime.kind}</p>
+      </div>
+      <p>Episode: {anime.episodes || anime.episodes_aired}</p>
       <p>Score: {anime.score}</p>
     </div>
   );
