@@ -85,7 +85,10 @@ function AnimeDetail({ params }: { params: { id: number } }) {
         <iframe
           width="420"
           height="315"
-          src={`${anime.videos[0].player_url}?autoplay=1&mute=1&loop=1`}
+          src={`${anime.videos[0].player_url.replace(
+            /^http:\/\//i,
+            "https://"
+          )}?autoplay=1&mute=1&loop=1`}
           allowFullScreen
           allow="autoplay"
           className="rounded-xl"
